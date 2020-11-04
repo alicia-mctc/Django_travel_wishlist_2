@@ -28,15 +28,15 @@ class TestVisitedPage(TestCase):
     def test_visited_page_shows_empty_list_message_for_empty_database(self):
         response = self.client.get(reverse('places_visited'))
         self.assertTemplateUsed(response, 'travel_wishlist/visited.html')
-        self.assertContains(response, 'You have not visited and places yet')
+        self.assertContains(response, 'You have not visited any places yet.')
 
 class VisitedList(TestCase):
 
     fixtures = ['test_places']
 
     def test_visited_list_shows_visited_places(self):
-        response = self.client.get(reverse('place_visited'))
-        self.assertTemplateUsed(response, 'travel_wishlist/visited/html')
+        response = self.client.get(reverse('places_visited'))
+        self.assertTemplateUsed(response, 'travel_wishlist/visited.html')
         self.assertContains(response, 'San Francisco')
         self.assertContains(response, 'Moab')
         self.assertNotContains(response, 'New York')
@@ -59,9 +59,9 @@ class TestAddNewPLace(TestCase):
         
         self.assertEqual(tokyo_from_database, tokyo_from_response)
 
-class TestVistedPlace(TestCase):
+class TestVisitedPlace(TestCase):
 
-    fixtures = ['test_place']
+    fixtures = ['test_places']
 
     def test_visit_place(self):
         visit_place_url = reverse('place_was_visited', args=(2,))
@@ -70,9 +70,9 @@ class TestVistedPlace(TestCase):
         self.assertTemplateUsed(response, 'travel_wishlist/wishlist.html')
         
         self.assertNotContains(response, 'New York')
-        self.assertNotContains(response, 'Tokyo')
+        self.assertContains(response, 'Tokyo')
 
-        new_york = Place.ojbects.get(pk=2)
+        new_york = Place.objects.get(pk=2)
         self.assertTrue(new_york.visited)
 
     def test_non_existent_place(self):
