@@ -1,6 +1,6 @@
 from selenium.webdriver.firefox.webdriver import WebDriver
 
-from django.test import LiveServiceTestCase
+from django.test import LiveServerTestCase
 
 class TitleTest(LiveServerTestCase):
 
