@@ -17,7 +17,7 @@ def place_list(request):
             return redirect('place_list')#reloads home page
 
 
-    places = Place.objects.filter(user=request.user).filter(visited=False).order_by('name')
+    places = Place.objects.filter(User=request.user).filter(visited=False).order_by('name')
     new_place_form = NewPlaceForm()#used to create HTML
     return render(request, 'travel_wishlist/wishlist.html', {'places': places, 'new_place_form': new_place_form})
 
