@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from .models import Place
 from .forms import NewPlaceForm, TripReviewForm
 from django.contrib.auth.decorators import login_required
@@ -34,13 +34,13 @@ def place_list(request):
 
 @login_required
 def places_visited(request):
-    visited = Place.objects.filter(user=request.user).filter(visited=True)
+    visited = Place.objects.filter(user=request.user).filter(visited=True).order_by('name')
     return render(request,'travel_wishlist/visited.html', {'visited': visited })
 
 @login_required
 def place_was_visited(request, place_pk):
     if request.method == 'POST':
-        pk = request.POST.get('pk')
+        #pk = request.POST.get('pk')
         # place = Place.objects.get(pk=place_pk)
         place = get_object_or_404(Place, pk=place_pk)
         print(place.user, request.user)
@@ -63,7 +63,7 @@ def about(request):
 def place_details(request, place_pk):
     
     place = get_object_or_404(Place, pk=place_pk)
-    return render(request, 'travel_wishlist/place_detail.html', {'place': place})
+    #return render(request, 'travel_wishlist/place_detail.html', {'place': place})
 
     # Does this place belong to the current user?
     if place.user != request.user:
