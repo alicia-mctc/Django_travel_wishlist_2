@@ -9,7 +9,7 @@ class Place(models.Model):
     visited = models.BooleanField(default=False)
     notes = models.TextField(blank=True, null=True)
     date_visited = models.DateField(blank=True, null=True)
-    photo = models.ImageField(upload_to= 'user images/', blank=True, null=True)
+    photo = models.ImageField(upload_to= 'user_images/', blank=True, null=True)
     
     def save(self, *args, **kwargs):
         old_place = Place.objects.filter(pk=self.pk).first()
