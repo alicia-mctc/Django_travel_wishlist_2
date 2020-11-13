@@ -78,13 +78,18 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'places',
-        'USER': 'traveler',
+        'USER': 'Traveler',
         'PASSWORD': os.getenv('TRAVELER_PW'),
         'HOST': '/cloudsql/wishlist-django-295419:us-central1:wishlist-db',
         'POST': '5432'
     }
 }
 
+# If not running at GAE, then replace the host with your local
+#computer to connect to the database via cloud_sql_proxy
+
+if not os.getenv('GAE_INSTANCE'):
+    DATABASES['default']['HOST'] = '127.0.0.1'
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
